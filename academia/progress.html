@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Progresso dos Alunos</title>
+    <style>
+        /* Estilo básico */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        #app {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #e61717;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #e61717;
+            color: white;
+        }
+        .back-button {
+            background-color: #e61717;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #8f2828;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Progresso do Aluno</h1>
+        <p id="progress-info"></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome do Aluno</th>
+                    <th>Exercício</th>
+                    <th>Quantidade Feita</th>
+                    <th>Porcentagem de Conclusão</th>
+                </tr>
+            </thead>
+            <tbody id="progress-table">
+                <!-- Os dados do progresso dos alunos serão inseridos aqui -->
+            </tbody>
+        </table>
+        <button class="back-button" onclick="window.location.href='student.html'">Voltar</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressData = JSON.parse(localStorage.getItem('progressData')) || [];
+            const tableBody = document.getElementById('progress-table');
+            const studentName = prompt("Digite seu nome:"); // Pedir o nome do aluno
+
+            let totalExercises = 0;
+            let completedExercises = 0;
+
+            progressData.forEach(data => {
+                if (data.completed) {
+                    totalExercises++;
+                    completedExercises += data.quantity;
+                    
+                    const row = document.createElement('tr');
+
+                    const studentCell = document.createElement('td');
+                    studentCell.textContent = studentName; // Adiciona o nome do aluno
+                    row.appendChild(studentCell);
+
+                    const exerciseCell = document.createElement('td');
+                    exerciseCell.textContent = data.exercise; // Nome do exercício
+                    row.appendChild(exerciseCell);
+
+                    const quantityCell = document.createElement('td');
+                    quantityCell.textContent = data.quantity; // Quantidade feita
+                    row.appendChild(quantityCell);
+
+                    const percentageCell = document.createElement('td');
+                    percentageCell.textContent = ((data.quantity / data.total) * 100).toFixed(2) + '%'; // Porcentagem de conclusão
+                    row.appendChild(percentageCell);
+
+                    tableBody.appendChild(row);
+                }
+            });
+
+            const overallPercentage = totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
+
+            document.getElementById('progress-info').textContent = `Você completou ${completedExercises} de ${totalExercises} exercícios. Porcentagem de conclusão geral: ${overallPercentage.toFixed(2)}%`;
+        });
+    </script>
+</body>
+</html>

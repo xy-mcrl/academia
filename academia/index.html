@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Autenticação</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Autenticação</h1>
+        <form id="auth-form">
+            <input type="text" id="username" placeholder="Usuário" required>
+            <input type="password" id="password" placeholder="Senha" required>
+            <select id="role">
+                <option value="trainer">Treinador</option>
+                <option value="student">Aluno</option>
+            </select>
+            <button type="submit">Entrar</button>
+            <button type="button" id="register-button">Cadastrar</button>
+        </form>
+        <div id="message"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
